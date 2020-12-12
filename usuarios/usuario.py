@@ -27,11 +27,15 @@ class Usuario:
         usuario = (self.nombre, self.apellido,
                    self.email, self.password, fecha)
 
-        cursor.execute(sql, usuario)
+        try:
+            cursor.execute(sql, usuario)
 
-        database.commit()
+            database.commit()
+            result = [cursor.rowcount, self]
+        except:
+            result = [0, self]
 
-        return [cursor.rowcount, self]
+        return result
 
     def identificar(self):
         return self.nombre
